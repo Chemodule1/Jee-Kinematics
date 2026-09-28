@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10172a">
+<title>Kinematics — JEE Flipbook</title>
+<style>
+:root{--ink:#17233c;--muted:#68748b;--paper:#fffdf7;--accent:#6c55e8;--cyan:#37bfd0;--line:#e8e6df}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,#e1f9fa,transparent 34%),radial-gradient(circle at 100% 20%,#e9e2ff,transparent 32%),#f4f5fb;color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{max-width:1100px;margin:auto;padding:22px 22px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--accent));display:grid;place-items:center;color:white;font-size:22px;font-weight:900;box-shadow:0 8px 24px #6c55e844}h1{font-size:18px;margin:0;letter-spacing:.03em}.tag{font-size:12px;color:var(--muted)}.pill{border:1px solid #dedbea;background:#fff9;padding:8px 12px;border-radius:99px;color:#51469a;font-size:12px;font-weight:700}
+main{max-width:1100px;margin:18px auto 50px;padding:0 22px}.intro{margin:10px 0 20px}.intro h2{font-size:clamp(30px,5vw,48px);line-height:1.08;letter-spacing:-.04em;margin:0 0 8px}.intro p{color:var(--muted);margin:0}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px;align-items:start}.toc,.reader{background:#ffffffd9;border:1px solid #e5e5f0;border-radius:20px;box-shadow:0 15px 45px #24315b12}.toc{padding:15px;position:sticky;top:15px}.toc h3{margin:4px 8px 10px;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.toc button{display:block;width:100%;text-align:left;border:0;background:transparent;color:#4d5870;padding:9px 10px;border-radius:10px;cursor:pointer;font:inherit;font-size:13px;line-height:1.35}.toc button.active,.toc button:hover{background:#eeeaff;color:#4d3bc2;font-weight:750}
+.reader{overflow:hidden;min-height:550px;background:var(--paper);position:relative}.reader-top{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px}.progress{height:5px;background:#eeeaf8}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--accent));transition:width .25s}.page{padding:clamp(22px,5vw,54px);min-height:420px;animation:enter .25s ease}.page h2{font-size:clamp(24px,4vw,35px);line-height:1.2;letter-spacing:-.025em;margin:0 0 24px;color:#242b4b}.page ul{padding-left:22px}.page li{margin:0 0 13px}.page b{color:#3c328e}.page .ex{margin-top:25px;background:#f0faff;border-left:4px solid var(--cyan);padding:15px 18px;border-radius:0 12px 12px 0}.page .ex b:first-child{color:#087b8a}.page .mut{color:var(--muted)}.question{margin:13px 0;border:1px solid #e5e2f0;border-radius:12px;background:#fff;padding:13px 15px}.question summary{cursor:pointer;font-weight:650}.answer{padding:10px 0 2px;color:#27654e;font-weight:700}.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 22px;border-top:1px solid var(--line);background:#fff9}.controls button{border:1px solid #dedbea;background:white;border-radius:11px;padding:10px 16px;color:#4c438e;font-weight:750;cursor:pointer}.controls button.primary{background:var(--accent);color:white;border-color:var(--accent)}button:disabled{opacity:.35;cursor:not-allowed}.counter{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@keyframes enter{from{opacity:.4;transform:translateX(10px)}to{opacity:1;transform:none}}
+@media(max-width:760px){header{padding:16px}.pill{display:none}main{padding:0 12px}.layout{grid-template-columns:1fr}.toc{position:static;display:flex;gap:5px;overflow-x:auto;padding:10px}.toc h3{display:none}.toc button{flex:0 0 auto;width:auto;max-width:210px;white-space:nowrap}.reader{min-height:0}.page{min-height:350px}.reader-top{padding:12px 16px}.controls{padding:13px}.controls button{padding:9px 12px}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">↗</div><div><h1>JEE FLIPBOOK</h1><div class="tag">Kinematics · Learn one page at a time</div></div></div><div class="pill">FREE · NO LOGIN · NO API KEY</div></header>
+<main><section class="intro"><h2>Motion, made memorable.</h2><p>Swipe through the concepts, explore worked examples, then reveal answers when you're ready.</p></section>
+<div class="layout"><nav class="toc" aria-label="Chapter contents"><h3>Contents</h3><div id="tocItems"></div></nav>
+<section class="reader" aria-live="polite"><div class="reader-top"><span id="chapterLabel">KINEMATICS / STUDY EDITION</span><span id="readPercent">0% read</span></div><div class="progress"><span id="progressBar"></span></div><article class="page" id="page"></article><div class="controls"><button id="prev">← Previous</button><span class="counter" id="counter">Page 1 of 9</span><button class="primary" id="next">Next page →</button></div></section></div>
+<div class="footer">A free study resource. Your reading position is saved on this device. Use ← / → keys to turn pages.</div></main>
+<script>
+const D={};
+function Q(question,answer){return `<details class="question"><summary>${question}</summary><div class="answer">Answer: ${answer}</div></details>`}
+</script>
+<script>
+D["Kinematics"]=[
+{h:"1. Distance, displacement, velocity",b:`<ul>
+<li><b>Distance</b> is the total path length (scalar). <b>Displacement</b> is the change in position vector Δr (vector). |Displacement| ≤ distance always.</li>
+<li>Average velocity = Δr/Δt. Average speed = total distance / total time. Instantaneous velocity v = dr/dt.</li>
+<li>Half the <i>distance</i> at v₁ and half at v₂: average speed = 2v₁v₂/(v₁+v₂) (harmonic mean).</li>
+<li>Half the <i>time</i> at v₁ and half at v₂: average speed = (v₁+v₂)/2.</li></ul>
+<div class="ex"><b>Example.</b> A car goes half the distance at 40 km/h and the rest at 60 km/h. Average speed = 2·40·60/100 = <b>48 km/h</b>, not 50.</div>`},
+{h:"2. Acceleration and equations of motion",b:`<ul>
+<li>a = dv/dt = v·dv/dx. Use v·dv/dx when acceleration is given as a function of position.</li>
+<li>For <b>constant a only</b>: v = u + at, s = ut + ½at², v² = u² + 2as, and distance in the nth second sₙ = u + a(2n−1)/2.</li>
+<li>Derivation: integrate a = dv/dt to get v; integrate v = ds/dt to get s; eliminate t to get v².</li>
+<li>Average velocity equals (u+v)/2 only when a is constant.</li></ul>
+<div class="ex"><b>Example.</b> x = 2t³ − 9t² + 12t. Then v = 6(t−1)(t−2), so the particle reverses at t = 1 s and 2 s. Positions: x(0)=0, x(1)=5, x(2)=4, x(3)=9. Distance in 3 s = 5+1+5 = <b>11 m</b>; displacement = <b>9 m</b>.</div>`},
+{h:"3. Motion graphs",b:`<ul>
+<li>x–t: slope = velocity. Curving upward means positive acceleration.</li>
+<li>v–t: slope = acceleration; <b>area = displacement</b> (area below the axis counts negative). For distance, add the areas as positive.</li>
+<li>a–t: area = change in velocity.</li>
+<li>A body reverses direction when v crosses zero, not when a is zero.</li>
+<li>Steeper x–t slope means greater speed. A horizontal x–t line means at rest.</li>
+<li>A v–t graph never lets you find the starting position; you need it given.</li></ul>
+<div class="ex"><b>Tip.</b> In a v–t triangle from rest with peak v over total time T, displacement = ½·v·T. Use geometry instead of equations.</div>`},
+{h:"4. Vertical motion and free fall",b:`<ul>
+<li>Thrown up with speed u (take g = 10): time to top = u/g, max height = u²/2g, total flight = 2u/g.</li>
+<li>Speed at any height is the same going up and coming down. Time up equals time down.</li>
+<li>From rest, distances in successive seconds are in the ratio 1 : 3 : 5 : 7. Distance in the nth second = g(2n−1)/2.</li>
+<li>At the top, v = 0 but a = g (downward).</li></ul>
+<div class="ex"><b>Example.</b> Ball thrown up at 20 m/s. Max height 20 m, time to return 4 s. At t = 3 s: y = 60−45 = 15 m and v = −10 m/s. Distance in 3 s = 20 + 5 = <b>25 m</b>; displacement = <b>15 m</b>.</div>`},
+{h:"5. Relative motion, river and rain",b:`<ul>
+<li>v(A relative to B) = v<sub>A</sub> − v<sub>B</sub> (vector subtraction).</li>
+<li><b>River–boat</b> (boat speed u in still water, river speed v, width d):
+<ul><li>Minimum time: head straight across. t = d/u, drift = vd/u.</li>
+<li>Zero drift (needs u &gt; v): head upstream at angle θ from the perpendicular with sinθ = v/u. Then t = d/√(u²−v²).</li>
+<li>If u &lt; v, drift cannot be zero. Minimum drift = d√(v²−u²)/u, at cosα = −u/v (α measured from the flow direction).</li></ul></li>
+<li><b>Rain and man:</b> the rain's velocity relative to the man is v<sub>rain</sub> − v<sub>man</sub>. The umbrella tilts at tanθ = v<sub>man</sub>/v<sub>rain</sub> from the vertical.</li></ul>
+<div class="ex"><b>Example.</b> u = 5, v = 3, d = 100 m. Minimum time 20 s (drift 60 m). Zero drift: sinθ = 3/5, time = 100/4 = <b>25 s</b>.</div>`},
+{h:"6. Projectile motion: derivations",b:`<ul>
+<li>Horizontal: x = u cosθ·t (no acceleration). Vertical: y = u sinθ·t − ½gt². The two motions are independent.</li>
+<li>Time of flight T = 2u sinθ/g. Max height H = u² sin²θ/2g. Range R = u² sin2θ/g.</li>
+<li>Trajectory: y = x tanθ − gx²/(2u²cos²θ) = x tanθ(1 − x/R). It is a parabola.</li>
+<li>R is maximum (u²/g) at 45°. Angles θ and 90°−θ give the same range.</li>
+<li>H = R tanθ/4, so H = R when tanθ = 4.</li>
+<li>Speed at height y: v² = u² − 2gy. At the top, speed = u cosθ (not zero).</li>
+<li>Radius of curvature at the top = u²cos²θ/g.</li></ul>`},
+{h:"7. Horizontal launch and inclined planes",b:`<ul>
+<li><b>Horizontal launch from height h</b> at speed u: T = √(2h/g), range = u√(2h/g), landing speed = √(u² + 2gh).</li>
+<li>A ball dropped and another thrown horizontally from the same height reach the ground together.</li>
+<li><b>Projectile on an incline</b> (incline angle α, projected at angle θ above the incline surface): take axes along and perpendicular to the incline. Then a<sub>∥</sub> = −g sinα and a<sub>⊥</sub> = −g cosα.
+<ul><li>T = 2u sinθ/(g cosα)</li><li>Range up the incline R = 2u² sinθ cos(θ+α)/(g cos²α)</li>
+<li>For down the incline, replace α with −α.</li>
+<li>Maximum range up = u²/[g(1+sinα)]; down = u²/[g(1−sinα)].</li></ul></li></ul>`},
+{h:"8. JEE traps and common mistakes",b:`<ul>
+<li>Using v = u + at when acceleration is not constant. Check first.</li>
+<li>Saying a = 0 at the top of a vertical throw. It is g.</li>
+<li>Confusing displacement with distance in questions with reversals.</li>
+<li>Subtracting magnitudes instead of vectors in relative motion.</li>
+<li>Treating area under a v–t graph below the axis as positive displacement.</li>
+<li>Forgetting that a projectile's speed at the top is u cosθ.</li>
+<li>Ignoring signs: choose an axis direction first and keep it for u, a, s.</li>
+<li>Mixing up "time" and "distance" halves in average-speed problems.</li></ul>`},
+{h:"9. Practice set (g = 10 m/s²)",b:`<p style="color:var(--mut)">Try on paper first, then reveal.</p>${Q("A car covers half the distance at 40 km/h and the other half at 60 km/h. Find the average speed.","48 km/h")}${Q("A ball is dropped from 80 m. Find the time to reach the ground, the speed on landing, and the distance covered in the last second.","4 s; 40 m/s; 35 m")}${Q("A projectile is launched at 50 m/s at 37° (sin37° = 0.6). Find time of flight, max height and range.","6 s; 45 m; 240 m")}${Q("A boat (4 m/s in still water) crosses a 200 m wide river flowing at 3 m/s, heading straight across. Find the time and the drift.","50 s; 150 m")}${Q("Two projectiles have the same speed and are launched at 30° and 60°. Compare their ranges and maximum heights.","Ranges are equal (ratio 1:1); heights are in ratio 1:3.")}${Q("x = t³ − 6t² + 9t (metres, seconds). Find the distance travelled in the first 4 s.","v = 3(t−1)(t−3) so the particle reverses at t = 1 and 3. Path: 0→4, 4→0, 0→4, total 12 m (displacement 4 m).")}`}
+];
+
+</script>
+<script>
+const pages=D["Kinematics"], pageEl=document.getElementById('page'), toc=document.getElementById('tocItems');
+let current=Math.max(0,Math.min(pages.length-1,Number(localStorage.getItem('kinematicsFlipPage')||0)));
+function render(){const p=pages[current];pageEl.innerHTML=`<h2>${p.h}</h2>${p.b}`;document.getElementById('counter').textContent=`Page ${current+1} of ${pages.length}`;document.getElementById('readPercent').textContent=`${Math.round((current+1)/pages.length*100)}% through`;document.getElementById('progressBar').style.width=((current+1)/pages.length*100)+'%';document.getElementById('prev').disabled=current===0;document.getElementById('next').disabled=current===pages.length-1;[...toc.querySelectorAll('button')].forEach((b,i)=>{b.classList.toggle('active',i===current);b.setAttribute('aria-current',i===current?'page':'false')});localStorage.setItem('kinematicsFlipPage',current);pageEl.scrollIntoView({behavior:'smooth',block:'nearest'})}
+pages.forEach((p,i)=>{const b=document.createElement('button');b.textContent=p.h;b.onclick=()=>{current=i;render()};toc.appendChild(b)});
+document.getElementById('prev').onclick=()=>{if(current>0){current--;render()}};
+document.getElementById('next').onclick=()=>{if(current<pages.length-1){current++;render()}};
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'&&current<pages.length-1){current++;render()}if(e.key==='ArrowLeft'&&current>0){current--;render()}});
+let touchX=null;pageEl.addEventListener('touchstart',e=>touchX=e.changedTouches[0].clientX,{passive:true});pageEl.addEventListener('touchend',e=>{if(touchX===null)return;let dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>65){if(dx<0&&current<pages.length-1)current++;if(dx>0&&current>0)current--;render()}touchX=null},{passive:true});
+render();
+</script></body></html>
